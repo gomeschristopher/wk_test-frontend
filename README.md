@@ -2,4 +2,4 @@
 
 ## SPA para gerenciamento de pedidos
 
-## Acesso via https://wk-test.herokuapp.com
+## Acesso via https://wk-teste.web.app
