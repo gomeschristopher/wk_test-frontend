@@ -1,0 +1,37 @@
+<div class="row mb-3">
+    <div class="col-8">
+        <h1>Clientes</h1>
+    </div>
+    <div class="col">
+        <button class="btn btn-primary" (click)="onOpenClientFormModal()">Novo</button>
+    </div>
+</div>
+
+<div class="spinner-border text-warning" role="status" *ngIf="isLoading">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="errMsg">
+    {{ errMsg }}
+ </div>
+
+<table class="table" *ngIf="!isLoading">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">CPF</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let client of clients">
+            <th scope="row">{{ client.id }}</th>
+            <td>{{ client.name }}</td>
+            <td>{{ client.document }}</td>
+            <td>
+                <button class="btn btn-primary" (click)="onOpenClientFormModal(client)">Editar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

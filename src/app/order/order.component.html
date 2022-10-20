@@ -1,0 +1,39 @@
+<div class="row mb-3">
+    <div class="col-8">
+        <h1>Pedidos</h1>
+    </div>
+    <div class="col">
+        <button class="btn btn-primary" (click)="onOpenOrderFormModal()">Novo</button>
+    </div>
+</div>
+
+<div class="spinner-border text-warning" role="status" *ngIf="isLoading">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="errMsg">
+    {{ errMsg }}
+ </div>
+
+<table class="table" *ngIf="!isLoading">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Cliente</th>
+            <th scope="col">Data</th>
+            <th scope="col">Valor</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let order of orders">
+            <th scope="row">{{ order.id }}</th>
+            <td>{{ order.client.name }}</td>
+            <td>{{ order.date | date: 'dd/MM/yyyy HH:mm' }}</td>
+            <td>{{ order.value | currency:'BRL' }}</td>
+            <td>
+                <button class="btn btn-primary" (click)="onOpenOrderFormModal(order)">Editar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>

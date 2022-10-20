@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Novo item</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+</div>
+<form #orderItemForm="ngForm" (ngSubmit)="onSave()">
+    <div class="modal-body">
+        <div class="alert alert-danger" role="alert" *ngIf="errMsg">
+            {{ errMsg }}
+         </div>
+        <div class="row">
+            <div class="mb-3">
+                <label for="product" class="form-label">Produto</label>
+                <input id="product" class="form-control" name="product" [(ngModel)]="orderItem.product"
+                    [ngbTypeahead]="searchproducts" [inputFormatter]="productFormatter"
+                    [resultFormatter]="productFormatter" [editable]="false" required />
+            </div>
+            <div class="mb-3">
+                <label for="quantity" class="form-label">Quantidade</label>
+                <input class="form-control" type="number" [(ngModel)]="orderItem.quantity" name="quantity" required>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="spinner-border text-warning" role="status" *ngIf="isLoading">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <button *ngIf="!isLoading" type="submit" class="btn btn-primary"
+            [disabled]="orderItemForm.invalid">Salvar</button>
+    </div>
+</form>

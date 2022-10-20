@@ -1,0 +1,63 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{ order.id ? 'Editar ' : 'Novo ' }}pedido</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="onCancel()"></button>
+</div>
+<form #orderForm="ngForm" (ngSubmit)="onSave()">
+    <div class="modal-body">
+        <div class="alert alert-danger" role="alert" *ngIf="errMsg">
+            {{ errMsg }}
+        </div>
+        <div class="row">
+            <div class="col-6 mb-3">
+                <label for="client" class="form-label">Cliente</label>
+                <input id="client" class="form-control" name="client" [(ngModel)]="order.client"
+                    [ngbTypeahead]="searchClients" [inputFormatter]="clientFormatter"
+                    [resultFormatter]="clientFormatter" [editable]="false" required />
+            </div>
+            <div class="col-6 mb-3">
+                <label for="date" class="form-label">Data</label>
+                <input id="date" type="datetime-local" class="form-control" name="date" [(ngModel)]="order.date" required />
+            </div>
+        </div>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Produto</th>
+                    <th scope="col">Qtd</th>
+                    <th scope="col">Valor</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of order.items">
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.value | currency:'BRL' }}</td>
+                    <td>
+                        <button class="btn btn-danger" (click)="onRemoveOrderItem(item)">Remover</button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    <th></th>
+                    <th>{{ order.value | currency:'BRL' }}</th>
+                </tr>
+            </tfoot>
+        </table>
+        <div class="d-grid gap-2">
+            <button type="button" class="btn btn-primary" (click)="onOpenNewOrderItemFormModal()">Novo item</button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="spinner-border text-warning" role="status" *ngIf="isLoading">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        <div class="btn-group" *ngIf="!isLoading">
+            <button type="button" class="btn btn-danger" (click)="onDelete()" *ngIf="order.id">Excluir</button>
+            <button type="submit" class="btn btn-primary" [disabled]="orderForm.invalid || order.items.length <= 0">Salvar</button>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,37 @@
+<div class="row mb-3">
+    <div class="col-8">
+        <h1>Produtos</h1>
+    </div>
+    <div class="col">
+        <button class="btn btn-primary" (click)="onOpenProductFormModal()">Novo</button>
+    </div>
+</div>
+
+<div class="spinner-border text-warning" role="status" *ngIf="isLoading">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<div class="alert alert-danger" role="alert" *ngIf="errMsg">
+    {{ errMsg }}
+ </div>
+
+<table class="table" *ngIf="!isLoading">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Preço</th>
+            <th scope="col"></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <th scope="row">{{ product.id }}</th>
+            <td>{{ product.name }}</td>
+            <td>{{ product.value | currency:'BRL' }}</td>
+            <td>
+                <button class="btn btn-primary" (click)="onOpenProductFormModal(product)">Editar</button>
+            </td>
+        </tr>
+    </tbody>
+</table>
